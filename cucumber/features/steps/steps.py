@@ -28,6 +28,17 @@ def click_element(context, element):
 			context.driver.find_element(By.CSS_SELECTOR, '#ui-id-8').click()
 		case "Jackets":
 			context.driver.find_element(By.XPATH, '//a[text()="Jackets"]').click()
+		case "Add to cart":
+			context.driver.find_element(By.ID, 'product-addtocart-button').click()
+		case "Open cart":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.XPATH, '//a[@href="https://magento.softwaretestingboard.com/checkout/cart/"]').click()
+		case "Proceed to Checkout":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.ID, 'top-cart-btn-checkout').click()
+		case "Best Way Shipping":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.NAME, 'ko_unique_1').click()
 	
 @step('verify "{condition}"')
 def verify(context, condition):
@@ -57,6 +68,13 @@ def verify(context, condition):
 			context.driver.implicitly_wait(5)
 			context.driver.find_element(By.XPATH, '//span[text()="Jackets"]')
 			assert context.driver.title == "Jackets - Tops - Women"
+		case "Succesfully added to cart":
+			context.driver.implicitly_wait(5)
+			context.driver.find_element(By.CLASS_NAME, 'message-success')
+		case "Checkout page":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.XPATH, '//div[text()="Shipping Address"]')
+			assert context.driver.title == "Checkout"
 			
 @step('fill form field "{field}" "{value}"')
 def fill_form(context, field, value):
@@ -74,3 +92,39 @@ def fill_form(context, field, value):
 			context.driver.find_element(By.CSS_SELECTOR, '#pass').send_keys(value)
 		case "Email":
 			context.driver.find_element(By.CSS_SELECTOR, '#email').send_keys(value)
+		case "Shipping first name":
+			context.driver.find_element(By.NAME, 'firstname').send_keys(value)
+		case "Shipping last name":
+			context.driver.find_element(By.NAME, 'lastname').send_keys(value)
+		case "Street Address":
+			context.driver.find_element(By.NAME, 'street[0]').send_keys(value)
+		case "City":
+			context.driver.find_element(By.NAME, 'city').send_keys(value)
+		case "State/Province":
+			context.driver.find_element(By.NAME, 'region_id').send_keys(value)
+		case "Zip/Postal Code":
+			context.driver.find_element(By.NAME, 'postcode').send_keys(value)
+		case "Country":
+			context.driver.find_element(By.NAME, 'country_id').send_keys(value)
+		case "Phone Number":
+			context.driver.find_element(By.NAME, 'telephone').send_keys(value)
+
+@step('filter "{field}" "{value}"')
+def filter_element(context, field, value):
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.XPATH, '//div[text()="' + field + '"]').click()
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.XPATH, '//a[contains(text(),"' + value + '")]').click()
+
+@step('select product "{product}" "{size}" "{color}" "{quantity}"')
+def select_product(context, product, size, color, quantity):
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.XPATH, '//a[contains(text(),"' + product + '")]').click()
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.XPATH, '//div[text()="' + size + '"]').click()
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.XPATH, '//div[@option-label="' + color + '"]').click()
+		context.driver.implicitly_wait(10)
+		context.driver.find_element(By.ID, 'qty').click()
+		context.driver.find_element(By.ID, 'qty').clear()
+		context.driver.find_element(By.ID, 'qty').send_keys(quantity)
