@@ -1,20 +1,22 @@
 *** Settings ***
 
+*** Variables ***
+${URL1}     https://magento.softwaretestingboard.com
+
 Library    SeleniumLibrary
 Documentation
-...    Experimenting
-...    This test will Verify DuckDuckGo
+...    Thesis
+...    This test will test magento.softwaretestingboard.com
 *** Keywords ***
 
-Navigate To DuckDuckGo
-    Open Browser    https://www.duckduckgo.com    browser=chrome
-Verify Page Contains DuckDuckGo
+Navigate To Magento
+    Open Browser    https://magento.softwaretestingboard.com    browser=chrome
+Verify Page Contains Home Page
     ${Get_title}=                 Get Title
-    Should Be Equal As Strings    ${Get_title}    DuckDuckGo — Privacy, simplified.
+    Should Be Equal As Strings    ${Get_title}    Home Page
     Close Browser
 
 *** Test Cases ***
 
-Open DuckDuckGo & Verify DuckDuckGo
-    Navigate To DuckDuckGo
-    Verify Page Contains DuckDuckGo
+Create an account
+    Navigate To ${URL1}

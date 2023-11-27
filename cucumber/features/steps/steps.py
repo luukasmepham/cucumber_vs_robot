@@ -1,6 +1,5 @@
 from behave import *
 from selenium.webdriver.common.by import By
-from selenium import webdriver
 
 @given('open webpage "{url}"')
 def open_url(context, url):
@@ -36,9 +35,17 @@ def click_element(context, element):
 		case "Proceed to Checkout":
 			context.driver.implicitly_wait(10)
 			context.driver.find_element(By.ID, 'top-cart-btn-checkout').click()
-		case "Best Way Shipping":
+		case "Flat Rate Shipping":
 			context.driver.implicitly_wait(10)
-			context.driver.find_element(By.NAME, 'ko_unique_1').click()
+			context.driver.find_element(By.XPATH, '//input[@value="flatrate_flatrate"]').click()
+		case "Next":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.XPATH, '//span[text()="Next"]').click()
+		case "Place Order":
+			context.driver.implicitly_wait(10)
+			elem = context.driver.find_element(By.XPATH, '//*[text()="Place Order"]')
+			context.driver.execute_script("arguments[0].scrollIntoView();", elem)
+			context.driver.execute_script("arguments[0].click();", elem) 
 	
 @step('verify "{condition}"')
 def verify(context, condition):
@@ -75,6 +82,14 @@ def verify(context, condition):
 			context.driver.implicitly_wait(10)
 			context.driver.find_element(By.XPATH, '//div[text()="Shipping Address"]')
 			assert context.driver.title == "Checkout"
+		case "Payment method page":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.XPATH, '//div[text()="Payment Method"]')
+			assert context.driver.title == "Checkout"
+		case "Confirmation page":
+			context.driver.implicitly_wait(10)
+			context.driver.find_element(By.XPATH, '//span[text()="Thank you for your purchase!"]')
+			assert context.driver.title == "Success Page"
 			
 @step('fill form field "{field}" "{value}"')
 def fill_form(context, field, value):
@@ -100,7 +115,7 @@ def fill_form(context, field, value):
 			context.driver.find_element(By.NAME, 'street[0]').send_keys(value)
 		case "City":
 			context.driver.find_element(By.NAME, 'city').send_keys(value)
-		case "State/Province":
+		case "State/Province":		
 			context.driver.find_element(By.NAME, 'region_id').send_keys(value)
 		case "Zip/Postal Code":
 			context.driver.find_element(By.NAME, 'postcode').send_keys(value)
