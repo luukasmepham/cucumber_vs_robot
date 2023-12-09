@@ -143,3 +143,4 @@ def select_product(context, product, size, color, quantity):
 		context.driver.find_element(By.ID, 'qty').click()
 		context.driver.find_element(By.ID, 'qty').clear()
 		context.driver.find_element(By.ID, 'qty').send_keys(quantity)
+ 

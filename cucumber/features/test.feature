@@ -1,7 +1,6 @@
 Feature: test scenarios
 
-### ONE TIME USE ONLY! ###
-@accountCreation
+@accountcreation
 Scenario: create an account
 	Given open webpage "https://magento.softwaretestingboard.com/"
 
@@ -10,7 +9,7 @@ Scenario: create an account
 
 	When fill form field "Create first name" "Test"
 	When fill form field "Create last name" "User"
-	When fill form field "Create email" "testuser@asd.test"
+	When fill form field "Create email" "testuser@asdfff.test"
 	When fill form field "Create password" "Password123"
 	When click "Submit account creation form"
 	Then verify "Account created succesfully"
@@ -22,7 +21,7 @@ Scenario: sign user in and sign user out
 	When click "Sign in"
 	Then verify "Account sign in page"
 
-	When fill form field "Email" "testuser@teskjhkjht.test"
+	When fill form field "Email" "testuser@asdfff.test"
 	When fill form field "Password" "Password123"
 	When click "Submit account sign in form"
 	Then verify "Account signed in succesfully"
